@@ -21,7 +21,7 @@ import pEvent from 'p-event';
 import pws from 'peer-wire-swarm';
 import { ThrottleGroup } from 'stream-throttle';
 import exchangeMetadata from './exchange-metadata';
-import { name, version } from '../package';
+import { name, version } from '../package.json';
 
 const DEFAULT_PORT = 4242;
 const MAX_PEERS = 100;
@@ -850,6 +850,14 @@ export default class Torrent extends EventEmitter {
 
   disconnect(addr) {
     this.swarm.remove(addr);
+  }
+
+  reannounce() {
+    if (this.discovery) {
+      this.discovery.updatePort(this.port);
+    }
+
+    return Promise.resolve();
   }
 
   block(addr) {
