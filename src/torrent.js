@@ -664,6 +664,7 @@ export default class Torrent extends EventEmitter {
             this.connect(addr);
           }
         });
+        if (this.complete) this.discovery.complete();
 
         let exchange = exchangeMetadata(parse.infoHash, parse.infoBuffer, (metadata) => {
           if (!this.metadata) { // Doesn't include announce
