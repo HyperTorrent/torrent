@@ -1,5 +1,5 @@
 import Bitfield from 'bitfield';
-import blocklist from 'ip-set';
+import Blocklist from 'ip-set';
 import bufferFrom from 'buffer-from';
 import crypto from 'crypto';
 import { EventEmitter } from 'events';
@@ -105,7 +105,7 @@ export default class Torrent extends EventEmitter {
     this.rechokeOptimisticTime = 0;
     this.rechokeIntervalId = null;
 
-    this.blocked = blocklist(options.blocklist);
+    this.blocked = new Blocklist(options.blocklist);
 
     if (options.autostart !== false) process.nextTick(() => { this.start(); });
 
