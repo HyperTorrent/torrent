@@ -664,6 +664,13 @@ export default class Torrent extends EventEmitter {
             this.connect(addr);
           }
         });
+        // Ugly hack
+        this.discovery.update = (function update() {
+          if (this.dht) this._dhtAnnounce(); // eslint-disable-line
+          if (this.tracker) this.tracker.update();
+        })
+          .bind(this.discovery);
+
         if (this.complete) this.discovery.complete();
 
         let exchange = exchangeMetadata(parse.infoHash, parse.infoBuffer, (metadata) => {
@@ -853,10 +860,7 @@ export default class Torrent extends EventEmitter {
   }
 
   reannounce() {
-    if (this.discovery) {
-      this.discovery.updatePort(this.port);
-    }
-
+    if (this.discovery) this.discovery.update();
     return Promise.resolve();
   }
 
