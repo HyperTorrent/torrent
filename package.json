@@ -1,6 +1,6 @@
 {
   "name": "@hypertorrent/torrent",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "repository": "git@github.com:HyperTorrent/torrent.git",
   "main": "dist/torrent.js",
